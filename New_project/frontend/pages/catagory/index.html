@@ -1,125 +1,414 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Config</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Config</title>
 
-  <!-- stylesheet -->
-  <link rel="stylesheet" href="../../assets/vendor/plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="../../assets/css/adminlte.min.css">
-  <link rel="stylesheet" href="../../assets/css/style.css">
-  <link rel="stylesheet" href="../../assets/vendor/plugins/bootstrap-toggle/bootstrap-toggle.min.css">
-  <link rel="stylesheet" href="../../assets/vendor/plugins/toastr/toastr.min.css">
-  <link rel="stylesheet" href="../../assets/vendor/plugins/@sweetalert2/theme-bootstrap-4/bootstrap-4.css">
+    <!-- stylesheet -->
+    <link
+      rel="stylesheet"
+      href="../../assets/vendor/plugins/fontawesome-free/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../../assets/css/adminlte.min.css" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../assets/vendor/plugins/bootstrap-toggle/bootstrap-toggle.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../assets/vendor/plugins/toastr/toastr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../assets/vendor/plugins/@sweetalert2/theme-bootstrap-4/bootstrap-4.css"
+    />
 
     <!-- Datatables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/1.2.1/css/searchPanes.dataTables.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/searchpanes/1.2.1/css/searchPanes.dataTables.min.css"
+    />
 
-    <link rel="stylesheet" href="../../assets/vendor/bootstrap-table/bootstrap-table.css">
+    <link
+      rel="stylesheet"
+      href="../../assets/vendor/bootstrap-table/bootstrap-table.css"
+    />
 
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link
+      href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
+      rel="stylesheet"
+    />
 
     <style>
-        table, th, td {
-          border: 1px solid black;
-          width: 100px;
-        }
-        </style>
-
-</head>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
-    <!-- Header Content -->
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        width: 100px;
+      }
+    </style>
+  </head>
+  <body class="hold-transition sidebar-mini">
     <div class="wrapper">
+      <!-- Header Content -->
+      <div class="wrapper">
         <!-- include Sidebar -->
         <div id="sidebar"></div>
         <div class="content-wrapper">
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-12">
-                            <h5 class="m-0 text-dark">Category</h5>
-                        </div>
-                    </div>
+          <div class="content-header">
+            <div class="container-fluid">
+              <div class="row mb-2">
+                <div class="col-sm-12">
+                  <h5 class="m-0 text-dark">Category</h5>
                 </div>
+              </div>
             </div>
-            <!-- Main content -->
-            <div class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title" style="line-height: 2.1rem">Category</h3>
-                                    <a href="form_create.html" class="btn btn-primary float-right">เพิ่มข้อมูล</a>
-                                </div>
-                                <div class="card-body">
-                                    <table  id="dataTable" 
-                                            class="table table-hover table-bordered table-striped" 
-                                            width="100%">
-                                            <tfoot>
-                                                <tr role="row">
-                                                    <th class="align-middle sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 102.6px;" aria-label="ลำดับ: activate to sort column ascending"></th>
-                                                    <th class="align-middle sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 102.6px;" aria-label="อาคาร: activate to sort column descending" aria-sort="ascending">อาคาร</th>
-                                                    <th class="align-middle sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 102.6px;" aria-label="ชั้น: activate to sort column ascending"></th>
-                                                    <th class="align-middle sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 102.6px;" aria-label="ประเภท: activate to sort column ascending">ประเภท</th>
-                                                    <th class="align-middle sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 102.6px;" aria-label="รหัสพื้นที่: activate to sort column ascending"></th>
-                                                    <th class="align-middle sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 102.6px;" aria-label="ชื่อผู้เช่า: activate to sort column ascending"></th>
-                                                    <th class="align-middle sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 102.6px;" aria-label="ชื่อสถานที่: activate to sort column ascending"></th>
-                                                    <th class="align-middle sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 104.6px;" aria-label="รายละเอียด: activate to sort column ascending"></th>
-                                                    <th class="align-middle sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 103.6px;" aria-label="จัดการ: activate to sort column ascending"></th>
-                                                </tr>
-                                            </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+          </div>
+          <!-- Main content -->
+          <div class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title" style="line-height: 2.1rem">
+                        Category
+                      </h3>
+                      <a
+                        href="form_create.html"
+                        class="btn btn-primary float-right"
+                        >เพิ่มข้อมูล</a
+                      >
                     </div>
+                    <div class="toppiccenter">
+                      <h1>Category Page</h1>
+                      <br /><br />
+
+                      <!-- <form name="form1" id="form1" action="/action_page.php"> -->
+                      Category:
+                      <select name="subject" id="catdrop" class="catdrop">
+                        <option value="" selected="selected">
+                          Please select cat
+                        </option>
+                      </select>
+                      <!-- <input
+                        class="button button1"
+                        onclick="document.location='http://localhost/webconfig/insertAgencyPage.html'"
+                        value="Go to InsertPage"
+                      /> -->
+
+                      <br /><br />
+                      Building:
+                      <select name="topic" id="cat2drop" class="cat2drop">
+                        <option value="" selected="selected">
+                          Please select building
+                        </option>
+                      </select>
+
+                      <button
+                        type="button"
+                        id="updatebtn"
+                        class="button button1"
+                        data-toggle="modal"
+                        data-target="#insertModal"
+                      >
+                        insert
+                      </button>
+                    </div>
+                    <div class="card-body">
+                      <div style="width: 95%" class="center">
+                        <table
+                          id="mytable"
+                          class="table table-hover table-bordered table-striped"
+                          style="width: 100%"
+                        ></table>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+        <!-- updatedata modal -->
+        <div class="modal fade" id="updateModal" role="dialog">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                  &times;
+                </button>
+                <h4 class="modal-title">test UPDATE data and logo logic</h4>
+              </div>
+              <div class="modal-body">
+                <form
+                  target="_blank"
+                  action="submitUpdateAgency.php"
+                  method="post"
+                  enctype="multipart/form-data"
+                >
+                  <label for="agencid">ID:</label>
+                  <input name="agencid" id="agencid" value="" readonly />
+
+                  ประเภทธุรกิจ:
+                  <select name="catin" class="catdrop" id="catdropModal">
+                    <!-- <option value="" selected="selected">Select cat</option> --></select
+                  ><br /><br />
+
+                  อาคาร:
+                  <select
+                    name="bdin"
+                    class="cat2drop"
+                    id="bddropModal"
+                    class="bdpick"
+                  >
+                    <!-- <option value="" selected="selected">Select building</option> -->
+                  </select>
+                  <!-- <input
+                  class="deletebuilding"
+                  type="button"
+                  value="deletebuilding"
+                /> -->
+                  <br /><br />
+
+                  <!-- <label for="addbd">เพิ่มอาคาร(ใส่เฉพาะเวลาต้องการเพิ่มเท่านั้น):</label
+        ><br />
+        <input type="text" id="addbd" value="" />
+        <input id="addbuild" type="button" value="addbuilding" /><br /><br /> -->
+
+                  <label for="floor">ชั้น:</label><br />
+                  <input
+                    name="floorin"
+                    type="text"
+                    id="floor"
+                    value=""
+                  /><br /><br />
+                  <label for="code">รหัสพื้นที่:</label><br />
+                  <input
+                    name="codein"
+                    type="text"
+                    id="code"
+                    value=""
+                  /><br /><br />
+                  <label for="owner">ชื่อผู้เช่า:</label><br />
+                  <input
+                    name="ownerin"
+                    type="text"
+                    id="owner"
+                    value=""
+                  /><br /><br />
+                  <label for="name">ชื่อสถานที่:</label><br />
+                  <input
+                    name="namein"
+                    type="text"
+                    id="name"
+                    value=""
+                  /><br /><br />
+                  <label for="detail">รายละเอียด:</label><br />
+                  <input
+                    name="detailin"
+                    type="text"
+                    id="detail"
+                    value=""
+                  /><br /><br />
+
+                  <h5>your agency's logo image</h5>
+                  <p>ใส่ได้เพียงรูปเดียว</p>
+                  <p>png only</p>
+                  <p>ไม่เกิน20mb</p>
+                  <img id="imageshow" src="" width="107" height="98" />
+                  <input
+                    type="file"
+                    accept="image/png, .jpg"
+                    name="updateimage"
+                    id="updateimage"
+                  />
+                  <br /><br />
+                  <input type="submit" name="updatesub" value="update" />
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- insertdata modal -->
+        <div class="modal fade" id="insertModal" role="dialog">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                  &times;
+                </button>
+                <h4 class="modal-title">Test insertdata modal</h4>
+              </div>
+              <div class="modal-body">
+                <form
+                  target="_blank"
+                  action="submitInsertAgency.php"
+                  method="post"
+                  enctype="multipart/form-data"
+                >
+                  <!-- <h1>test add data and logo logic</h1> -->
+
+                  ประเภทธุรกิจ:
+                  <select name="catins" class="" id="catdropinsmodal" required>
+                    <option value="" selected="selected">
+                      Select cat
+                    </option></select
+                  ><br /><br />
+
+                  อาคาร:
+                  <select name="bdins" id="bddropinsmodal" required>
+                    <option value="" selected="selected">
+                      Select building
+                    </option>
+                  </select>
+                  <input
+                    class="deletebuilding"
+                    id="deletebuilding"
+                    type="button"
+                    value="deletebuilding"
+                  />
+                  <br /><br />
+
+                  <label for="addbd"
+                    >เพิ่มอาคาร(ใส่เฉพาะเวลาต้องการเพิ่มเท่านั้น):</label
+                  ><br />
+                  <input type="text" id="addbd" value="" />
+                  <input
+                    id="addbuild"
+                    type="button"
+                    value="addbuilding"
+                  /><br /><br />
+
+                  <label for="floor">ชั้น:</label><br />
+                  <input
+                    name="floorins"
+                    type="text"
+                    id="floor"
+                    value=""
+                  /><br /><br />
+                  <label for="code">รหัสพื้นที่:</label><br />
+                  <input
+                    name="codeins"
+                    type="text"
+                    id="code"
+                    value="-"
+                  /><br /><br />
+                  <label for="owner">ชื่อผู้เช่า:</label><br />
+                  <input
+                    name="ownerins"
+                    type="text"
+                    id="owner"
+                    value="-"
+                  /><br /><br />
+                  <label for="name">ชื่อสถานที่:</label><br />
+                  <input
+                    name="nameins"
+                    type="text"
+                    id="name"
+                    value=""
+                    required
+                  /><br /><br />
+                  <label for="detail">รายละเอียด:</label><br />
+                  <input
+                    name="detailins"
+                    type="text"
+                    id="detail"
+                    value="-"
+                  /><br /><br />
+
+                  <!-- <input id="addbt" type="button" value="add" /> -->
+
+                  <h5>your agency's image</h5>
+
+                  <input
+                    type="file"
+                    accept="image/png, .jpg"
+                    name="uploadfile"
+                    id="uploadimage"
+                  />
+                  <br /><br />
+                  <input type="submit" name="uploadfilesub" value="add" />
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <th
+        class="align-middle sorting"
+        tabindex="0"
+        aria-controls="dataTable"
+        rowspan="1"
+        colspan="1"
+        style="width: 102.6px"
+        aria-label="ลำดับ: activate to sort column ascending"
+      >
+        ลำดับ
+      </th>
     </div>
+    <!-- SCRIPTS -->
+    <script src="../../assets/vendor/plugins/jquery/jquery.min.js"></script>
+    <script src="../../assets/vendor/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/vendor/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="../../assets/js/hamburger/adminlte.js"></script>
 
-    <th class="align-middle sorting" tabindex="0" 
-    aria-controls="dataTable" rowspan="1" colspan="1" 
-    style="width: 102.6px;" aria-label="ลำดับ: activate to sort column ascending">ลำดับ</th>
+    <!-- OPTIONAL SCRIPTS -->
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
 
-<!-- SCRIPTS -->
-<script src="../../assets/vendor/plugins/jquery/jquery.min.js"></script>
-<script src="../../assets/vendor/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../../assets/vendor/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
-<script src="../../assets/js/hamburger/adminlte.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="../../assets/vendor/plugins/toastr/toastr.min.js"></script>
 
-<!-- OPTIONAL SCRIPTS -->
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+    <script src="../../assets/vendor/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="../../assets/vendor/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js"></script>
+    <script src="../../assets/vendor/bootstrap-table/bootstrap-table-th-TH.js"></script>
+    <script src="../../assets/vendor/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script src="../../assets/vendor/bootstrap-table/extensions/export/export.js"></script>
 
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-<script src="../../assets/vendor/plugins/toastr/toastr.min.js"></script>
+    <!-- <script src="../../assets/vendor/plugins/bootstrap-toggle/bootstrap-toggle.min.js"></script> -->
 
-<script src="../../assets/vendor/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="../../assets/vendor/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js"></script>
-<script src="../../assets/vendor/bootstrap-table/bootstrap-table-th-TH.js"></script>
-<script src="../../assets/vendor/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
-<script src="../../assets/vendor/bootstrap-table/extensions/export/export.js"></script>
+    <!-- Create Me SCRIPTS -->
+    <script src="../../assets/js/catagory/index.js"></script>
+    <script src="../../assets/js/catagory/insertAgencyJS.js"></script>
 
-
-<!-- <script src="../../assets/vendor/plugins/bootstrap-toggle/bootstrap-toggle.min.js"></script> -->
-
-
-<!-- Create Me SCRIPTS -->
-<script src="../../assets/js/catagory/index.js"></script>
-
-<script> 
-$(document).ready(function() {
-    $("#sidebar").load("../include/sidebar.html"); 
-})
-</script> 
-</body>
+    <script>
+      $(document).ready(function () {
+        $("#sidebar").load("../include/sidebar.html");
+      });
+    </script>
+  </body>
 </html>
