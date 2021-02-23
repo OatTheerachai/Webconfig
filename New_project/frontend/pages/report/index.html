@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Report</title>
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../assets/vendor/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../assets/css/adminlte.min.css">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/vendor/plugins/bootstrap-toggle/bootstrap-toggle.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/plugins/@sweetalert2/theme-bootstrap-4/bootstrap-4.css">
+
+    <!-- Datatables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    
+
+    <!-- Header Content -->
+    <div class="wrapper">
+        <!-- include Sidebar -->
+        <div id="sidebar"></div>
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <h5 class="m-0 text-dark">Information</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title" style="line-height: 2.1rem">รายชื่อ</h3>
+                                    <a href="form_create.html" class="btn btn-primary float-right">เพิ่มข้อมูล</a>
+                                </div>
+                                <div class="card-body">
+                                    <table  id="dataTable" 
+                                            class="table table-hover table-bordered table-striped" 
+                                            width="100%">
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- SCRIPTS -->
+<script src="../../assets/vendor/plugins/jquery/jquery.min.js"></script>
+<script src="../../assets/vendor/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../assets/vendor/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
+<script src="../../assets/js/hamburger/adminlte.js"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+
+<script src="../../assets/vendor/plugins/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+<script src="../../assets/vendor/plugins/toastr/toastr.min.js"></script>
+
+<script> 
+      $("#sidebar").load("../include/sidebar.html"); 
+
+      $(document).ready(function(){
+        /**
+         * จำลองการได้ข้อมูลมาจาก Server ด้วยการยิง Request ในรูปแบบของ Ajax
+         */
+        let ajaxResponse = [{
+                p_id: '1',
+                p_image: 'https://tabsoft.co.th/static/sildeimg/s3.jpg',
+                p_name: 'tabsoft',
+                detail: 'storyclass',
+                updated_at: '2020-10-01 20:50:40',
+                created_at: '2020-10-01 20:50:40'
+            },{
+                p_id: '2',
+                p_image: 'https://tabsoft.co.th/static/sildeimg/s6.jpg',
+                p_name: 'tabsoft',
+                detail: 'storyclass',
+                updated_at: '2020-10-01 20:50:40',
+                created_at: '2020-10-01 20:50:40'
+            },{
+                p_id: '3',
+                p_image: 'https://tabsoft.co.th/static/sildeimg/s4.jpg',
+                p_name: 'tabsoft',
+                detail: 'minicourse',
+                updated_at: '2020-10-01 20:50:40',
+                created_at: '2020-10-01 20:50:40'
+            }
+        ]
+
+        let arrayData = []
+        ajaxResponse.forEach(function (item, index){
+            arrayData.push([
+                ++index,
+                `<img src="${item.p_image}" class="img-fluid" width="180px">`,
+                item.detail,
+                item.p_name,
+                `<div class="btn-group" role="group">
+                    <a href="form_edit.html?id=${item.p_id}" type="button" class="btn btn-warning">
+                        <i class="far fa-edit"></i> แก้ไข
+                    </a>
+                    <button type="button" class="btn btn-danger" id="delete" data-id="${item.p_id}">
+                        <i class="far fa-trash-alt"></i> ลบ
+                    </button>
+                </div>`
+            ])
+        })
+
+        $('#dataTable').DataTable( {
+            data: arrayData,
+            columns: [
+                { title: "ลำดับ" , className: "align-middle"},
+                { title: "รูปภาพ" , className: "align-middle"},
+                { title: "ชื่อสินค้า", className: "align-middle"},
+                { title: "รายละเอียด" , className: "align-middle"},
+                { title: "จัดการ", className: "align-middle"}
+            ],
+            responsive: {
+                details: {
+                    display: $.fn.dataTable.Responsive.display.modal( {
+                        header: function ( row ) {
+                            var data = row.data();
+                            return data[2];
+                        }
+                    } ),
+                    renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                        tableClass: 'table'
+                    } )
+                }
+            }
+        })
+    })
+</script> 
+
+</body>
+</html>

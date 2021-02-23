@@ -1,0 +1,69 @@
+
+body, html {
+    height: 100%;
+    font-size: 0.95rem !important;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bg {
+    background: #56baed;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    clip-path: polygon(0 0, 55% 0, 45% 100%, 0% 100%);
+}
+.toggle.ios, .toggle-on.ios, .toggle-off.ios { 
+    border-radius: 20px; 
+    font-weight: 100px;
+}
+.toggle.ios .toggle-handle { 
+    border-radius: 20px; 
+}
+
+.toggle-on.btn {
+    padding-right: 19px;
+    font-weight: 100 !important;
+}
+
+.btn {
+    font-size: inherit !important;
+}
+
+.form-group {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.col-10 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.col-8 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .dz-preview .dz-image img{
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+  }
+
+
