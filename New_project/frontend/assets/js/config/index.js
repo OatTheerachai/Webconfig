@@ -118,13 +118,4 @@ $(document).ready(function(){
         toastr.success('อัพเดทข้อมูลเสร็จเรียบร้อย')
         // toastr.error('มีข้อผิดพลาดเกินขึ้น โปรดติดต่อผู้ดูแลระบบ')
     })
-    $('.toggle-event').change(function(){
-        toastr.success('อัพเดทข้อมูลเสร็จเรียบร้อย')
-        // toastr.error('มีข้อผิดพลาดเกินขึ้น โปรดติดต่อผู้ดูแลระบบ')
-    })
-    $('.toggle-event').change(function(){
-        toastr.success('อัพเดทข้อมูลเสร็จเรียบร้อย')
-        // toastr.error('มีข้อผิดพลาดเกินขึ้น โปรดติดต่อผู้ดูแลระบบ')
-    })
-
 })
