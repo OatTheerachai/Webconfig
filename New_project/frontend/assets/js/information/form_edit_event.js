@@ -6,7 +6,20 @@ var text = $('#details').summernote({
         ['color', ['color']],
         ['para', ['ul', 'ol', 'paragraph']],
     ],
-    height: 200,
+    callbacks: {
+        onKeydown: function(e) {
+            var t = e.currentTarget.innerText;
+            const maxlength = 100;
+            $("#total-characters").text(t.length + "/" + maxlength);
+            if (t.length >= maxlength) {
+              //delete key
+              if (e.keyCode != 8 ){
+                e.preventDefault();
+              }
+            }
+          }
+    },
+    height: 100,
 });
 
 $.ajax({
@@ -142,16 +155,22 @@ var Picdropzone = new Dropzone('#mydropzone', {
         return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
     },
     success: function(file, response) {
-        // console.log(file.id);
-        // console.log(response);
-        // $.each(response, function(i, el){
-        //     if($.inArray(el, id) === -1) 
-        //     {
-        //         id.push(el);
-        //     }
-        // });
-        // if(uploaded_Video == true) {
-            Videodropzone.processQueue();
+        if(response.data == "Success"){
+            if(upload_Video == true){
+                Videodropzone.processQueue();
+            }
+            else {
+                toastr.success('บันทึกข้อมูลเรียบร้อย')
+                setTimeout(() => {
+                  window.location.href = '../information'
+                }, 800);
+            }
+        }
+        else {
+            toastr.error('ไม่สามารถบันทึกข้อมูลได้');
+        }
+        // if(upload_Video == true) {
+        //     Videodropzone.processQueue();
         // }
     }
 });
@@ -229,9 +248,17 @@ function ReadFileVideo() {
         });
 
       },
-    //   success: function(file,res) {
-    //       console.log(res);
-    //   },
+      success: function(file,res) {
+        if(res.data == "Success"){
+            toastr.success('บันทึกข้อมูลเรียบร้อย')
+            setTimeout(() => {
+              window.location.href = '../information'
+            }, 800);
+        }
+        else {
+            toastr.error('ไม่สามารถบันทึกข้อมูลได้');
+        }
+      },
       removedfile: function(file) {
           let _ref;
           return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
@@ -251,7 +278,8 @@ function ReadFileVideo() {
     });
   }
 
-  $('#submit').click(function(){
+  $('#formData').on('submit', function (e) {   
+    e.preventDefault();
     if(upload_pic == true) {
         Picdropzone.processQueue();
     }
@@ -260,6 +288,13 @@ function ReadFileVideo() {
         Videodropzone.processQueue();
     }     
     else {
-        sendEvent();
+        sendEvent().done(function(resp) {
+            if(resp == 1){
+              toastr.success('เข้าสู่ระบบเรียบร้อย')
+              setTimeout(() => {
+                window.location.href = 'pages/dashboard'
+              }, 800);
+            }
+        });
     }
   });

@@ -1,4 +1,4 @@
-
+const charLimit = 10;
 $('#details').summernote({
     toolbar: [
         ['style', ['style']],
@@ -10,10 +10,12 @@ $('#details').summernote({
         onKeydown: function(e) {
             var t = e.currentTarget.innerText;
             const maxlength = 100;
+            $("#total-characters").text(t.length + "/" + maxlength);
             if (t.length >= maxlength) {
               //delete key
-              if (e.keyCode != 8)
+              if (e.keyCode != 8 ){
                 e.preventDefault();
+              }
             }
           }
     },
@@ -21,7 +23,7 @@ $('#details').summernote({
 });
 
 $.ajax({
-    url: "../../assets/lib/datareturn.php?i=8", 
+    url: "../../assets/lib/datareturn.php?i=2", 
     success: function(result){
         // console.log(result.data);
         for(let i =0; i < result.length; i++){
@@ -89,7 +91,7 @@ var Picdropzone = new Dropzone('#mydropzone', {
         return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
     },
     success: function(file, response) {
-        console.log(response.id);
+        // console.log(response.id);
         id = response.id;
         // $.each(response, function(i, el){
         //     if($.inArray(el, id) === -1) 
@@ -136,7 +138,15 @@ var Picdropzone = new Dropzone('#mydropzone', {
           });
       },
       success: function(file,res) {
-        //   console.log(res);
+        if(res.data == "Success"){
+            toastr.success('บันทึกข้อมูลเรียบร้อย')
+            setTimeout(() => {
+              window.location.href = '../information'
+            }, 800);
+        }
+        else {
+            toastr.error('ไม่สามารถบันทึกข้อมูลได้');
+        }
       },
       removedfile: function(file) {
           let _ref;
@@ -144,6 +154,7 @@ var Picdropzone = new Dropzone('#mydropzone', {
       }
   });
 
-  $('#submit').click(function(){     
+  $('#formData').on('submit', function (e) {   
+    e.preventDefault();
     Picdropzone.processQueue();
   });

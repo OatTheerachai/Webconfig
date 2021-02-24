@@ -68,8 +68,9 @@
                                                 <span style="color: red;">
                                                     (100 ตัวอักษร)
                                                     </span>
-                                                <textarea id="details" class="textarea" name="details" placeholder="Place some text here">
-                                                
+                                                    <span id="total-characters"></span>
+                                                    <!-- <span>/100</span> -->
+                                                <textarea id="details" class="textarea" name="details" required>
                                                 </textarea>
                                             </div>
 
@@ -99,7 +100,7 @@
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="button" class="btn btn-primary btn-block" name="submit" id="submit">บันทึกข้อมูล</button>
+                                        <button type="submit" class="btn btn-primary btn-block" name="submit" id="submit">บันทึกข้อมูล</button>
                                     </div>
                                 </form>
                             </div>
@@ -123,6 +124,7 @@
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
 <!-- Summernote -->
 <script src="../../assets/vendor/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="../../assets/vendor/plugins/toastr/toastr.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
 

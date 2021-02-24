@@ -53,7 +53,8 @@ $(document).ready(function(){
         "order": [[1, 'asc']],
         "initComplete": function () {
                 $(document).on('click', '#delete', function(){ 
-                    let id = $(this).data('id')
+                    let id = $(this).data('id');
+                    console.log(id);
                     Swal.fire({
                         text: "คุณแน่ใจหรือไม่...ที่จะลบรายการนี้?",
                         icon: 'warning',

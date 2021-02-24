@@ -46,6 +46,10 @@
     }
     else if(isset($_POST["i"])){
         switch($_POST["i"]){
+            case 102:
+                $id = $_POST['id'];
+                echo queryData("UPDATE event SET show_status = 0 WHERE id='$id'");
+            break;
             case 103:
                 $id = $_POST['id'];
                 $firstname = $_POST['firstname'];
@@ -92,6 +96,7 @@
                     $gen_name = $value['gen_name'];
                     queryData("INSERT INTO video (v_name,gen_v_name,e_id) VALUE ('$nmae','$gen_name','$id')");
                 }
+                echo '{"data":"faile"}';
             break;
             case 108:
                 $text = $_POST['text'];
@@ -136,7 +141,7 @@
                 foreach($data_pic as $key=>$value) {
                     $nmae = $value['name'];
                     $gen_name = $value['gen_name'];
-                    queryData("UPDATE picture SET p_name ='$nmae', gen_p_name = '$gen_name' WHERE p_id='$p_id'");
+                    echo queryData("UPDATE picture SET p_name ='$nmae', gen_p_name = '$gen_name' WHERE p_id='$p_id'");
                 }
                 break;
             case 114:
@@ -145,7 +150,7 @@
                 foreach($data_pic as $key=>$value) {
                     $nmae = $value['name'];
                     $gen_name = $value['gen_name'];
-                    queryData("UPDATE video SET v_name ='$nmae', gen_v_name = '$gen_name' WHERE v_id='$v_id'");
+                    echo queryData("UPDATE video SET v_name ='$nmae', gen_v_name = '$gen_name' WHERE v_id='$v_id'");
                 }
                 break;
         }
