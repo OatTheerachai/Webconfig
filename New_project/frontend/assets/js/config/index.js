@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    var status;
      var ip = $('#dataTable-event').DataTable( {
         processing: true,
         responsive: true,
@@ -11,7 +12,7 @@ $(document).ready(function(){
             { 
                 title: 'ลำดับ',
                 className: "align-middle",
-                data: null
+                data: 'ip_id'
             },
             { 
                 title: "ที่อยู่ IP",
@@ -24,15 +25,20 @@ $(document).ready(function(){
                 data: null,
                 render: function ( data, type, row ) {
                     return `<div class="btn-group" role="group">
-                    <input class="toggle-event" type="checkbox" checked data-toggle="toggle" 
-                    data-on="เปิด" data-off="ปิด Ready" data-onstyle="success" data-offstyle="danger">
+                    <input class="toggle-event" data-id="${data.ip_id}" type="checkbox" name="status" 
+                        ${data.status == "true" ? 'checked': ''} data-toggle="toggle" data-on="เปิด" 
+                        data-off="ปิด" data-onstyle="success" data-offstyle="danger" data-style="ios">
                 </div>`
                 }
             },
             {
                 title: "สถานะ",
                 className: "align-middle",
-                defaultContent:"online"
+                data: null,
+                render: function ( data, type, row ) {
+                     return data.status == "true"? `<span class="badge badge-success">ออนไลน์</span>`: 
+                     `<span class="badge badge-danger">ออฟไลน์</span>`;
+                }
             },
             {
                 title: "จัดการ",
@@ -40,11 +46,8 @@ $(document).ready(function(){
                 data: null,
                 render: function ( data, type, row ) {
                     return `<div class="btn-group" role="group">
-                                <a href="form_edit_event.html?id=${data.ip_id}" type="button" class="btn btn-warning">
-                                    <i class="far fa-edit"></i> แก้ไข
-                                </a>
-                                <button type="button" class="btn btn-danger" id="delete" data-id="${data.ip_id}">
-                                    <i class="far fa-trash-alt"></i> ลบ
+                                <button type="button" class="btn btn-info" id="delete" data-id="${data.ip_id}">
+                                    <i class="fas fa-power-off"></i> Restart
                                 </button>
                             </div>`
                 }
@@ -58,33 +61,25 @@ $(document).ready(function(){
         "order": [[1, 'asc']],
         "initComplete": function () {
             $('.toggle-event').bootstrapToggle();
-                $(document).on('click', '#delete', function(){ 
-                    let id = $(this).data('ip_id')
-                    Swal.fire({
-                        text: "คุณแน่ใจหรือไม่...ที่จะลบรายการนี้?",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'ใช่! ลบเลย',
-                        cancelButtonText: 'ยกเลิก'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.post("../../assets/lib/datareturn.php", {
-                                i: 102,
-                                id: id
-                            }).done(function() {
-                                Swal.fire({
-                                    text: 'รายการของคุณถูกลบเรียบร้อย',
-                                    icon: 'success',
-                                    confirmButtonText: 'ตกลง',
-                                }).then((result) => {
-                                    location.reload();
-                                });
-                            })
-                        }
-                    })
-                })
+            $('.toggle-event').change(function(){
+                let id = $(this).data('id');
+                // console.log(id);
+                // console.log(this.checked);
+                $.ajax({  
+                    type: "POST",  
+                    url: "../../assets/lib/datareturn.php",  
+                    data: {
+                        i: 115,
+                        id: id,
+                        status: this.checked
+                    }
+                  }).done(function(resp) {
+                    toastr.success('อัพเดทข้อมูลเรียบร้อย')
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 800)
+                  })
+           })
             },
         responsive: {
             details: {
@@ -114,8 +109,8 @@ $(document).ready(function(){
          });
      }).draw();
 
-     $('.toggle-event').change(function(){
-        toastr.success('อัพเดทข้อมูลเสร็จเรียบร้อย')
-        // toastr.error('มีข้อผิดพลาดเกินขึ้น โปรดติดต่อผู้ดูแลระบบ')
-    })
+    //  $('.toggle-event').change(function(){
+    //      console.log("test");
+    //     toastr.success('อัพเดทข้อมูลเสร็จเรียบร้อย')
+    // })
 })

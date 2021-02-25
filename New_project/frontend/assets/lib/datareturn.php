@@ -30,7 +30,7 @@
                 echo json_encode($response);
             break;
             case 6:
-                echo '{"data":'.selectDataSQL("SELECT * FROM ip_address")."}";
+                echo '{"data":'.selectDataSQL("SELECT *,IF(status, 'true', 'false') status FROM ip_address")."}";
             break;
             case 7:
                 echo '{"data":'.selectDataSQL("SELECT agency_item.floor,agency_item.code_place,agency_item.owner,agency_item.name,agency_item.detail,building.name as bd_name,category.name as cat_name FROM agency_item 
@@ -156,6 +156,11 @@
                     $gen_name = $value['gen_name'];
                     echo queryData("UPDATE video SET v_name ='$nmae', gen_v_name = '$gen_name' WHERE v_id='$v_id'");
                 }
+                break;
+            case 115:
+                $id = $_POST['id'];
+                $status = $_POST['status'];
+                echo queryData("UPDATE ip_address SET status = $status  WHERE ip_id='$id'");
                 break;
         }
     }
