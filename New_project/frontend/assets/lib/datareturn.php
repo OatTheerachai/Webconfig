@@ -137,6 +137,8 @@
             break;
             case 113:
                 $p_id = $_POST['p_id'];
+                $p_path = $_POST['p_path'];
+                unlink($p_path);
                 $data_pic = json_decode(upload_pic(),true);
                 foreach($data_pic as $key=>$value) {
                     $nmae = $value['name'];
@@ -146,6 +148,8 @@
                 break;
             case 114:
                 $v_id = $_POST['v_id'];
+                $v_path = $_POST['v_path'];
+                unlink($v_path);
                 $data_pic = json_decode(upload_video(),true);
                 foreach($data_pic as $key=>$value) {
                     $nmae = $value['name'];

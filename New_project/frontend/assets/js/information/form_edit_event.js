@@ -63,6 +63,7 @@ $.ajax({
             text.summernote('code',response[0].detail);
         }
     });
+    var p_path;
     var p_id;
     var prevFile;
     var checkFilePic = 0;
@@ -85,6 +86,7 @@ $.ajax({
                     id: value.p_id
                 };
                 p_id = value.p_id;
+                p_path = value.path;
                 Picdropzone.options.addedfile.call(Picdropzone, mockFile);
                 Picdropzone.options.thumbnail.call(Picdropzone, mockFile, value.path);
                 Picdropzone.files.push( mockFile );
@@ -135,14 +137,15 @@ var Picdropzone = new Dropzone('#mydropzone', {
 
         //send form data to return id event
         this.on("sending", function(file, xhr, formData){
-            let title = $("#title").val();
-            let event_type = $("#event_type").val();
-            let details = $("#details").val();
-            formData.append("title", title);
-            formData.append("event_type", event_type);
-            formData.append("details", details);
+            // let title = $("#title").val();
+            // let event_type = $("#event_type").val();
+            // let details = $("#details").val();
+            // formData.append("title", title);
+            // formData.append("event_type", event_type);
+            // formData.append("details", details);
             formData.append("id", id);
             formData.append("p_id", p_id);
+            formData.append("p_path", p_path);
         }),
 
         this.on("error", function(file, message) { 
@@ -175,6 +178,7 @@ var Picdropzone = new Dropzone('#mydropzone', {
     }
 });
 var v_id;
+var v_path;
 var prevFileVideo;
 var upload_Video = false;
 function ReadFileVideo() {
@@ -194,6 +198,7 @@ function ReadFileVideo() {
                 size: value.size 
             };
             v_id = value.v_id;
+            v_path = value.v_path;
             Videodropzone.options.addedfile.call(Videodropzone, mockFile);
             Videodropzone.options.thumbnail.call(Videodropzone, mockFile, '../../assets/img/video.png');
             Videodropzone.files.push( mockFile );
@@ -232,6 +237,7 @@ function ReadFileVideo() {
         this.on("sending", function(file, xhr, formData){
             formData.append("id", id);
             formData.append("v_id", v_id);
+            formData.append("v_path", v_path);
         }),
 
         this.on("addedfile", function(file) { 
@@ -281,6 +287,7 @@ function ReadFileVideo() {
   $('#formData').on('submit', function (e) {   
     e.preventDefault();
     if(upload_pic == true) {
+        sendEvent();
         Picdropzone.processQueue();
     }
     else if(upload_Video == true) {
