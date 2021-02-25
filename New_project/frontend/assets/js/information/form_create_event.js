@@ -1,6 +1,29 @@
+const charLimit = 10;
+$('#details').summernote({
+    toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+    ],
+    callbacks: {
+        onKeydown: function(e) {
+            var t = e.currentTarget.innerText;
+            const maxlength = 100;
+            $("#total-characters").text(t.length + "/" + maxlength);
+            if (t.length >= maxlength) {
+              //delete key
+              if (e.keyCode != 8 ){
+                e.preventDefault();
+              }
+            }
+          }
+    },
+    height: 100,
+});
 
 $.ajax({
-    url: "../../assets/lib/datareturn.php?i=8", 
+    url: "../../assets/lib/datareturn.php?i=2", 
     success: function(result){
         // console.log(result.data);
         for(let i =0; i < result.length; i++){
@@ -12,8 +35,6 @@ $.ajax({
     }});
 
 //dropzone pic
-// var file_name = new Array;
-// var id = new Array;
 var id;
 Dropzone.autoDiscover = false;
 var Picdropzone = new Dropzone('#mydropzone', {
@@ -26,10 +47,12 @@ var Picdropzone = new Dropzone('#mydropzone', {
     parallelUploads: 10,
     uploadMultiple: true,
     maxFiles: 1,
+    // thumbnailWidth: 50,
+    // thumbnailHeight: 50,
     addRemoveLinks: true,
     maxFilesize: 10, // MB,
     dictRemoveFile: "ลบออก",
-    dictDefaultMessage: "เลือกรูปภาพ",
+    // dictDefaultMessage: "เลือกรูปภาพ",
     dictFileTooBig: "ไม่อนุญาตให้อัพโหลดไฟล์เกิน 2 MB",
     dictMaxFilesExceeded:"สามารถอัพโหลดได้ 1 รูป",
     dictInvalidFileType: "สามารถอัพได้เฉพาะ jpg,jpeg,png เเละ gif",
@@ -68,7 +91,7 @@ var Picdropzone = new Dropzone('#mydropzone', {
         return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
     },
     success: function(file, response) {
-        console.log(response.id);
+        // console.log(response.id);
         id = response.id;
         // $.each(response, function(i, el){
         //     if($.inArray(el, id) === -1) 
@@ -95,7 +118,7 @@ var Picdropzone = new Dropzone('#mydropzone', {
       addRemoveLinks: true,
       maxFilesize: 10, // MB
       dictRemoveFile: "ลบออก",
-      dictDefaultMessage: "เลือกวิดิโอ",
+    //   dictDefaultMessage: "เลือกวิดิโอ",
       dictFileTooBig: "ไม่อนุญาตให้อัพโหลดไฟล์เกิน 2 MB",
       dictMaxFilesExceeded:"สามารถอัพโหลดได้ 1 วิดิโอ",
       dictInvalidFileType: "สามารถอัพโหลดได้เฉพาะ mp4",
@@ -115,7 +138,15 @@ var Picdropzone = new Dropzone('#mydropzone', {
           });
       },
       success: function(file,res) {
-        //   console.log(res);
+        if(res.data == "Success"){
+            toastr.success('บันทึกข้อมูลเรียบร้อย')
+            setTimeout(() => {
+              window.location.href = '../information'
+            }, 800);
+        }
+        else {
+            toastr.error('ไม่สามารถบันทึกข้อมูลได้');
+        }
       },
       removedfile: function(file) {
           let _ref;
@@ -123,6 +154,7 @@ var Picdropzone = new Dropzone('#mydropzone', {
       }
   });
 
-  $('#submit').click(function(){     
+  $('#formData').on('submit', function (e) {   
+    e.preventDefault();
     Picdropzone.processQueue();
   });

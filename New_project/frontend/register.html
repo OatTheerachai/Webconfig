@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/login.css">
     <link rel="stylesheet" href="assets/vendor/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/css/adminlte.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -21,7 +20,7 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            width: 50%;
+            width: 50px;
             margin-top: 30px;
             margin-bottom: 30px;
         }
@@ -30,51 +29,49 @@
 </head>
 
 <body style="background-color: #666666;">
-        <div class="container-login">
-            <div class="wrap-login">
-                <form id="regis_form" class="login-form validate-form" method="post">
-                    <!-- <img src="assets/img/logo_login.png" alt="logo" class="logo"> -->
-                        <span class="login-form-title">
-                            Register
-                        </span>
 
-                    <div class="wrap-input validate-input" data-validate="Valid username is required">
-                        <input class="input" id="email" type="email" name="email" placeholder="Username" required>
-                    </div>
+    <div class="container h-100">
+        <div class="row justify-content-center align-items-center h-100">
+          <div class="col-md-6 mx-auto p-0 m-0">
+            <div class="card shadow">
+              <div class="card-body">
+                <form id="formData">
 
-                    <div class="wrap-input validate-input" data-validate="Password is required">
-                        <input class="input" id="password" type="password" name="password" placeholder="Password" required>
-                    </div>
+                  <!-- <img src="assets/img/unnamed.png" alt="logo" class="logo"> -->
+                  <span class="login-form-title">
+                      Register
+                  </span>
+      
+                  <div class="wrap-input validate-input" data-validate="Valid username is required">
+                      <input class="input" id="email" type="text" name="email" placeholder="E-mail">
+                  </div>
+      
+                  <div class="wrap-input validate-input" data-validate="Password is required">
+                      <input class="input" id="password" type="password" name="password" placeholder="Password">
+                  </div>
 
-                    <div class="wrap-input validate-input" data-validate="Valid username is required">
-                        <input class="input" id="firstname" type="text" name="Firstname" placeholder="Firstname" required>
-                    </div>
-
-                    <div class="wrap-input validate-input" data-validate="Valid username is required">
-                        <input class="input" id="lastname" type="text" name="Lastname" placeholder="Lastname" required>
-                    </div>
-
-                    <div class="container-login-form-btn">
-                        <button type="submit" class="login-form-btn">
-                            Login
-                        </button>
-                    </div>
-
-                    <div class="text-center p-t-46 p-b-20">
-                        <span class="txt2">
-                            <a href="login.html">
-                                or sign in using
-                            </a>
-                        </span>
-                    </div>
-                </form>
-
-                <div class="login-more" style="background-image: url('assets/img/bg2.jpg');">
+                  <div class="wrap-input validate-input" data-validate="Firstname is required">
+                    <input class="input" id="firstname" type="text" name="firstname" placeholder="Firstname">
                 </div>
+
+                <div class="wrap-input validate-input" data-validate="Lastname is required">
+                    <input class="input" id="lastname" type="text" name="lastname" placeholder="Lastname">
+                </div>
+      
+                  <button name="submit" class="btn btn-primary btn-block" type="submit" name="LoginBT" id="LoginBT"> เข้าสู่ระบบ</button>
+                  <div class="text-center p-t-46 p-b-20">
+                      <span class="txt2">
+                          <a href="login.html">
+                              or sign up using
+                          </a>
+                      </span>
+                  </div>
+                </form>
+              </div>
             </div>
-            <!-- End wrap-login100 -->
+          </div>
         </div>
-        <!-- End  container-login100-->
+      </div>
 
     <!--===============================================================================================-->
     <script src="assets/vendor/plugins/jquery/jquery.min.js"></script>

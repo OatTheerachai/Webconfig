@@ -6,7 +6,20 @@ var text = $('#details').summernote({
         ['color', ['color']],
         ['para', ['ul', 'ol', 'paragraph']],
     ],
-    height: 200,
+    callbacks: {
+        onKeydown: function(e) {
+            var t = e.currentTarget.innerText;
+            const maxlength = 100;
+            $("#total-characters").text(t.length + "/" + maxlength);
+            if (t.length >= maxlength) {
+              //delete key
+              if (e.keyCode != 8 ){
+                e.preventDefault();
+              }
+            }
+          }
+    },
+    height: 100,
 });
 
 $.ajax({
@@ -50,6 +63,7 @@ $.ajax({
             text.summernote('code',response[0].detail);
         }
     });
+    var p_path;
     var p_id;
     var prevFile;
     var checkFilePic = 0;
@@ -72,6 +86,7 @@ $.ajax({
                     id: value.p_id
                 };
                 p_id = value.p_id;
+                p_path = value.path;
                 Picdropzone.options.addedfile.call(Picdropzone, mockFile);
                 Picdropzone.options.thumbnail.call(Picdropzone, mockFile, value.path);
                 Picdropzone.files.push( mockFile );
@@ -122,14 +137,15 @@ var Picdropzone = new Dropzone('#mydropzone', {
 
         //send form data to return id event
         this.on("sending", function(file, xhr, formData){
-            let title = $("#title").val();
-            let event_type = $("#event_type").val();
-            let details = $("#details").val();
-            formData.append("title", title);
-            formData.append("event_type", event_type);
-            formData.append("details", details);
+            // let title = $("#title").val();
+            // let event_type = $("#event_type").val();
+            // let details = $("#details").val();
+            // formData.append("title", title);
+            // formData.append("event_type", event_type);
+            // formData.append("details", details);
             formData.append("id", id);
             formData.append("p_id", p_id);
+            formData.append("p_path", p_path);
         }),
 
         this.on("error", function(file, message) { 
@@ -142,20 +158,27 @@ var Picdropzone = new Dropzone('#mydropzone', {
         return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
     },
     success: function(file, response) {
-        // console.log(file.id);
-        // console.log(response);
-        // $.each(response, function(i, el){
-        //     if($.inArray(el, id) === -1) 
-        //     {
-        //         id.push(el);
-        //     }
-        // });
-        // if(uploaded_Video == true) {
-            Videodropzone.processQueue();
+        if(response.data == "Success"){
+            if(upload_Video == true){
+                Videodropzone.processQueue();
+            }
+            else {
+                toastr.success('บันทึกข้อมูลเรียบร้อย')
+                setTimeout(() => {
+                  window.location.href = '../information'
+                }, 800);
+            }
+        }
+        else {
+            toastr.error('ไม่สามารถบันทึกข้อมูลได้');
+        }
+        // if(upload_Video == true) {
+        //     Videodropzone.processQueue();
         // }
     }
 });
 var v_id;
+var v_path;
 var prevFileVideo;
 var upload_Video = false;
 function ReadFileVideo() {
@@ -175,6 +198,7 @@ function ReadFileVideo() {
                 size: value.size 
             };
             v_id = value.v_id;
+            v_path = value.v_path;
             Videodropzone.options.addedfile.call(Videodropzone, mockFile);
             Videodropzone.options.thumbnail.call(Videodropzone, mockFile, '../../assets/img/video.png');
             Videodropzone.files.push( mockFile );
@@ -213,6 +237,7 @@ function ReadFileVideo() {
         this.on("sending", function(file, xhr, formData){
             formData.append("id", id);
             formData.append("v_id", v_id);
+            formData.append("v_path", v_path);
         }),
 
         this.on("addedfile", function(file) { 
@@ -229,9 +254,17 @@ function ReadFileVideo() {
         });
 
       },
-    //   success: function(file,res) {
-    //       console.log(res);
-    //   },
+      success: function(file,res) {
+        if(res.data == "Success"){
+            toastr.success('บันทึกข้อมูลเรียบร้อย')
+            setTimeout(() => {
+              window.location.href = '../information'
+            }, 800);
+        }
+        else {
+            toastr.error('ไม่สามารถบันทึกข้อมูลได้');
+        }
+      },
       removedfile: function(file) {
           let _ref;
           return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
@@ -251,8 +284,10 @@ function ReadFileVideo() {
     });
   }
 
-  $('#submit').click(function(){
+  $('#formData').on('submit', function (e) {   
+    e.preventDefault();
     if(upload_pic == true) {
+        sendEvent();
         Picdropzone.processQueue();
     }
     else if(upload_Video == true) {
@@ -260,6 +295,13 @@ function ReadFileVideo() {
         Videodropzone.processQueue();
     }     
     else {
-        sendEvent();
+        sendEvent().done(function(resp) {
+            if(resp == 1){
+              toastr.success('เข้าสู่ระบบเรียบร้อย')
+              setTimeout(() => {
+                window.location.href = 'pages/dashboard'
+              }, 800);
+            }
+        });
     }
   });

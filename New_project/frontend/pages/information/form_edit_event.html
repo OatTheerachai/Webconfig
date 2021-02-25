@@ -65,15 +65,19 @@
 
                                             <div class="form-group col-sm-12">
                                                 <label for="owner">รายละเอียด</label>
-                                                <textarea id="details" class="textarea" name="details" placeholder="Place some text here">
+                                                <span style="color: red;">
+                                                    (100 ตัวอักษร)
+                                                    </span>
+                                                <span id="total-characters"></span>
+                                                <textarea id="details" class="textarea" name="details" required>
                                                 </textarea>
                                             </div>
 
                                             <div class="form-group col-sm-6">
                                                 <label for="customFile">รูปโปรไฟล์ 
-                                                    <span style="color: red;">
-                                                    (สามารถอัพโหลดได้ไม่เกิน 1 รูปภาพ)
-                                                    </span>
+                                                    <span style="color: red; font-size:10px;">
+                                                        (สามารถอัพโหลดได้ 1 รูปภาพ ไม่เกิน 2 MB เฉพาะไฟล์ .jpg,.png.gif)
+                                                        </span>
                                                 </label>
                                                     <div class="dropzone" id="mydropzone"">
                                                     </div>
@@ -81,9 +85,9 @@
 
                                             <div class="form-group col-sm-6">
                                                 <label for="customFile">รูปโปรไฟล์ 
-                                                    <span style="color: red;">
-                                                    (สามารถอัพโหลดได้ไม่เกิน 1 วิดิโอ)
-                                                    </span>
+                                                    <span style="color: red; font-size:10px;">
+                                                        (สามารถอัพโหลดได้ 1 วิดิโอ ไม่เกิน 10 MB เฉพาะไฟล์ .mp4)
+                                                        </span>
                                                 </label>
                                                     <div class="dropzone" id="mydropzone_video">
                                                     </div>
@@ -91,7 +95,7 @@
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="button" class="btn btn-primary btn-block" name="submit" id="submit">บันทึกข้อมูล</button>
+                                        <button type="submit" class="btn btn-primary btn-block" name="submit" id="submit">บันทึกข้อมูล</button>
                                     </div>
                                 </form>
                             </div>
@@ -115,6 +119,7 @@
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
 <!-- Summernote -->
 <script src="../../assets/vendor/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="../../assets/vendor/plugins/toastr/toastr.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
 

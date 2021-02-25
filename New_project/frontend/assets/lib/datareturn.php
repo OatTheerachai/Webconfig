@@ -30,7 +30,7 @@
                 echo json_encode($response);
             break;
             case 6:
-                echo '{"data":'.selectDataSQL("SELECT * FROM ip_address")."}";
+                echo '{"data":'.selectDataSQL("SELECT *,IF(status, 'true', 'false') status FROM ip_address")."}";
             break;
             case 7:
                 echo '{"data":'.selectDataSQL("SELECT agency_item.floor,agency_item.code_place,agency_item.owner,agency_item.name,agency_item.detail,building.name as bd_name,category.name as cat_name FROM agency_item 
@@ -46,6 +46,10 @@
     }
     else if(isset($_POST["i"])){
         switch($_POST["i"]){
+            case 102:
+                $id = $_POST['id'];
+                echo queryData("UPDATE event SET show_status = 0 WHERE id='$id'");
+            break;
             case 103:
                 $id = $_POST['id'];
                 $firstname = $_POST['firstname'];
@@ -92,6 +96,7 @@
                     $gen_name = $value['gen_name'];
                     queryData("INSERT INTO video (v_name,gen_v_name,e_id) VALUE ('$nmae','$gen_name','$id')");
                 }
+                echo '{"data":"faile"}';
             break;
             case 108:
                 $text = $_POST['text'];
@@ -132,21 +137,30 @@
             break;
             case 113:
                 $p_id = $_POST['p_id'];
+                $p_path = $_POST['p_path'];
+                unlink($p_path);
                 $data_pic = json_decode(upload_pic(),true);
                 foreach($data_pic as $key=>$value) {
                     $nmae = $value['name'];
                     $gen_name = $value['gen_name'];
-                    queryData("UPDATE picture SET p_name ='$nmae', gen_p_name = '$gen_name' WHERE p_id='$p_id'");
+                    echo queryData("UPDATE picture SET p_name ='$nmae', gen_p_name = '$gen_name' WHERE p_id='$p_id'");
                 }
                 break;
             case 114:
                 $v_id = $_POST['v_id'];
+                $v_path = $_POST['v_path'];
+                unlink($v_path);
                 $data_pic = json_decode(upload_video(),true);
                 foreach($data_pic as $key=>$value) {
                     $nmae = $value['name'];
                     $gen_name = $value['gen_name'];
-                    queryData("UPDATE video SET v_name ='$nmae', gen_v_name = '$gen_name' WHERE v_id='$v_id'");
+                    echo queryData("UPDATE video SET v_name ='$nmae', gen_v_name = '$gen_name' WHERE v_id='$v_id'");
                 }
+                break;
+            case 115:
+                $id = $_POST['id'];
+                $status = $_POST['status'];
+                echo queryData("UPDATE ip_address SET status = $status  WHERE ip_id='$id'");
                 break;
         }
     }

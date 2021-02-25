@@ -49,11 +49,26 @@ session_start();
                         <p>Information</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="../report/index.html" class="nav-link ">
                         <i class="nav-icon fas fa-newspaper"></i>
                         <p>Report</p>
                     </a>
+                </li> -->
+                <li class="active nav-item"">
+                    <a href="#homeSubmenu" class="nav-link" data-toggle="collapse" aria-expanded="false">
+                        <i class="nav-icon fas fa-newspaper"></i>
+                        <p>Report</p>
+                        <i class="nav-icon fas fa-caret-down"></i>
+                    </a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="../report/index_1.html" class="nav-link">Event</a>
+                        </li>
+                        <li>
+                            <a href="../report/index_2.html" class="nav-link">Category</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="../profile/profile.html" class="nav-link ">
