@@ -2,7 +2,7 @@ $(document).ready(function () {
   console.log("hello");
   var table;
 
-  var url = "http://localhost/webconfig/server/rfdb_connector.php";
+  var url = "http://localhost/frontend/assets/lib/rfdb_connector.php";
 
   var dataset = [];
   /////////////////////////////////////////////////////////////
@@ -301,14 +301,24 @@ $(document).ready(function () {
   // FUNCTIONS
   /////////////////////////////////////////////////////////////
 
+  $("#updateModal").on("hide", function () {
+    window.location.reload();
+  });
+  $("textarea").keyup(function () {
+    var characterCount = $(this).val().length,
+      current = $(".current"),
+      maximum = $(".maximum"),
+      theCount = $(".the-count");
+
+    current.text(characterCount);
+  });
+
   $("#mytable").on("click", "#updatebtn", function () {
-    // alert("update function");
     var data = [];
+
     data = table.row($(this).parents("tr")).data();
-    // alert(data);
 
     document.getElementById("agencid").value = data[1];
-    // alert(document.getElementById("agencid").value);
 
     document.getElementById("catdropModal").value = data[5];
     document.getElementById("bddropModal").value = data[2];
@@ -317,8 +327,14 @@ $(document).ready(function () {
     document.getElementById("owner").value = data[7];
     document.getElementById("name").value = data[8];
     document.getElementById("detail").value = data[9];
+    var detaillength = data[9].length;
+    document.getElementById("current").textContent = detaillength;
 
-    document.getElementById("imageshow").src = "server/image/" + data[10];
+    document.getElementById("imageshow").src =
+      "../../assets/img/logo/" + data[10];
+
+    // alert(data[10]);
+    // alert(document.getElementById("imageshow").src);
   });
 
   $("#mytable").on("click", "#deleteagency", function () {
@@ -363,6 +379,12 @@ $(document).ready(function () {
           }
           subdataset.push(tabledata[i].floor);
           subdataset.push(tabledata[i].cat_id);
+          for (var j = 0; j < categorydb.length; j++) {
+            if (categorydb[j].id == tabledata[i].cat_id) {
+              subdataset.push(categorydb[j].name);
+              break;
+            }
+          }
           subdataset.push(tabledata[i].code_place);
           subdataset.push(tabledata[i].owner);
           subdataset.push(tabledata[i].name);
@@ -396,18 +418,14 @@ $(document).ready(function () {
       columnDefs: [
         {
           targets: [6, 8, 3],
-          width: 100,
+          width: 80,
         },
         {
-          targets: [2],
+          targets: [2, 1, 5],
           visible: false,
           searchable: false,
         },
-        {
-          targets: [1],
-          visible: false,
-          searchable: false,
-        },
+
         {
           targets: -1,
           data: null,
@@ -430,6 +448,7 @@ $(document).ready(function () {
         { title: "อาคาร" },
         { title: "ชั้น" },
         { title: "รหัสประเภท" },
+        { title: "ประเภท" },
         { title: "รหัสพื้นที่" },
         { title: "ชื่อผู้เช่า" },
         { title: "ชื่อสถานที่" },
