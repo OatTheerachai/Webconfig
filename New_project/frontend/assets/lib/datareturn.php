@@ -42,6 +42,80 @@
             case 9:
                 echo selectDataSQL("SELECT * FROM category");
             break;
+            case 10:
+                echo '{"data":'.selectDataSQL("SELECT event.*,event_type.name,COUNT(log_event.event_id) as Views FROM event 
+                    INNER JOIN event_type ON event.et_id = event_type.id 
+                    LEFT JOIN log_event ON event.id = log_event.event_id 
+                    WHERE show_status = 1
+                    group by event.id")."}";
+            break;
+            case 11:
+                echo '{"data":'.selectDataSQL("SELECT agency_item.floor,agency_item.code_place,agency_item.owner,agency_item.name,
+                agency_item.detail,building.name as bd_name,category.name as cat_name,COUNT(log_agency.agen_id) as Views
+                FROM agency_item 
+                JOIN building ON building.id = agency_item.bd_id 
+                JOIN category ON category.id = agency_item.cat_id
+                LEFT JOIN log_agency ON agency_item.id = log_agency.agen_id
+                WHERE show_status = 1
+                group by agency_item.id")."}";
+                break;
+            case 12:
+                $data =  json_decode(selectDataSQL("SELECT agency_item.name,COUNT(log_agency.agen_id) as Views FROM agency_item
+                LEFT JOIN log_agency ON agency_item.id = log_agency.agen_id
+                WHERE show_status = 1
+                group by agency_item.id
+                ORDER BY Views DESC
+                LIMIT 5"),true);
+                $view = [];
+                $name = [];
+                foreach($data as $key=>$value) {
+                    $view[$key] = $value['Views'];
+                    $name[$key] = $value['name'];
+                }
+                $newdata;
+                $newdata['view'] = $view;
+                $newdata['name'] = $name;
+                // print_r($newdata);
+                echo json_encode($newdata);
+                break;
+                            case 12:
+                $data =  json_decode(selectDataSQL("SELECT agency_item.name,COUNT(log_agency.agen_id) as Views FROM agency_item
+                LEFT JOIN log_agency ON agency_item.id = log_agency.agen_id
+                WHERE show_status = 1
+                group by agency_item.id
+                ORDER BY Views DESC
+                LIMIT 5"),true);
+                $view = [];
+                $name = [];
+                foreach($data as $key=>$value) {
+                    $view[$key] = $value['Views'];
+                    $name[$key] = $value['name'];
+                }
+                $newdata;
+                $newdata['view'] = $view;
+                $newdata['name'] = $name;
+                // print_r($newdata);
+                echo json_encode($newdata);
+            break;
+            case 13:
+                $data =  json_decode(selectDataSQL("SELECT event.title,COUNT(log_event.event_id) as Views FROM event
+                LEFT JOIN log_event ON event.id = log_event.event_id
+                WHERE show_status = 1
+                group by event.id
+                ORDER BY Views DESC
+                LIMIT 5"),true);
+                $view = [];
+                $name = [];
+                foreach($data as $key=>$value) {
+                    $view[$key] = $value['Views'];
+                    $name[$key] = $value['title'];
+                }
+                $newdata;
+                $newdata['view'] = $view;
+                $newdata['name'] = $name;
+                // print_r($newdata);
+                echo json_encode($newdata);
+                break;
         }
     }
     else if(isset($_POST["i"])){

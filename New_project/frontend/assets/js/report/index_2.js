@@ -1,4 +1,4 @@
-var event = $('#dataTable-event').DataTable( {
+var information = $('#dataTable-event').DataTable( {
     processing: true,
     responsive: true,
     dom: 'Bfrtip',
@@ -13,21 +13,42 @@ var event = $('#dataTable-event').DataTable( {
     {
         url: '../../assets/lib/datareturn.php',
         data: {
-            i:10,
+            i:11,
             // date: 2020/2020/2020
         },
         type: 'GET',
     },
     columns: [
         { 
-            title: "หัวข้อ",
+            title: "อาคาร",
             className: "align-middle",
-            data: 'title'
+            data: 'bd_name',
+        },
+        { 
+            title: "ชั้น",
+            className: "align-middle",
+            data: 'floor',
         },
         { 
             title: "ประเภท",
             className: "align-middle",
-            data: 'name'
+            data: 'cat_name',
+
+        },
+        { 
+            title: "รหัสพื้นที่",
+            className: "align-middle",
+            data: 'code_place',
+        },
+        { 
+            title: "ชื่อผู้เช่า",
+            className: "align-middle",
+            data: 'owner',
+        },
+        { 
+            title: "ชื่อสถานที่",
+            className: "align-middle",
+            data: 'name',
         },
         { 
             title: "รายละเอียด",
@@ -76,7 +97,7 @@ var event = $('#dataTable-event').DataTable( {
 //          cell.innerHTML = i + 1;
 //      });
 //  }).draw();
- event.buttons().container().appendTo($('#test'));
+ information.buttons().container().appendTo($('#test'));
 
  console.log($('#date').val());
   $("#date").on("change", function(e) {
