@@ -14,19 +14,28 @@
   <link rel="stylesheet" href="../../assets/vendor/plugins/toastr/toastr.min.css">
   <link rel="stylesheet" href="../../assets/vendor/plugins/@sweetalert2/theme-bootstrap-4/bootstrap-4.css">
 
+
     <!-- Datatables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 
     <link rel="stylesheet" href="../../assets/vendor/bootstrap-table/bootstrap-table.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/image-picker/0.3.1/image-picker.css">
+
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+    <!-- <style type="text/css">
+      .thumbnails li img{
+          width: 200px;
+          height: 200px;
+      }
+  </style> -->
 
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
     <!-- Header Content -->
-    <!-- <div id="sidebar"></div> -->
     <div class="wrapper">
         <!-- include Sidebar -->
         <div id="sidebar"></div>
@@ -35,7 +44,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-12">
-                            <h5 class="m-0 text-dark">Config</h5>
+                            <h5 class="m-0 text-dark">Theme</h5>
                         </div>
                     </div>
                 </div>
@@ -47,14 +56,16 @@
                         <div class="col-10">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title" style="line-height: 2.1rem">Config</h3>
-                                    <a href="theme.html" class="btn btn-primary float-right">เพิ่มธีม</a>
+                                    <h3 class="card-title" style="line-height: 2.1rem">Theme</h3>
+                                    <a href="index.html" class="btn btn-warning float-right">กลับ</a>
                                 </div>
                                 <div class="card-body">
-                                    <table  id="dataTable-event" 
-                                            class="table table-hover table-bordered table-striped" 
-                                            width="100%">
-                                    </table>
+                                    <select class="image-picker show-html">
+                                        <option data-img-src="../../assets/img/bg1.jpg" width="200" height="200" value="1">  Page 1  </option>
+                                        <option data-img-src="https://source.unsplash.com/pWkk7iiCoDM/200x200" value="2">  Page 2  </option>
+                                        <option data-img-src="https://source.unsplash.com/pWkk7iiCoDM/200x200" value="12"> Page 12 </option>
+                                      </select>
+                                      <!-- <button id="test">test</button> -->
                                 </div>
                             </div>
                         </div>
@@ -76,6 +87,8 @@
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/image-picker/0.3.1/image-picker.min.js"></script>
+
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <script src="../../assets/vendor/plugins/toastr/toastr.min.js"></script>
 
@@ -84,13 +97,11 @@
 <script src="../../assets/vendor/bootstrap-table/bootstrap-table-th-TH.js"></script>
 <script src="../../assets/vendor/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
 <script src="../../assets/vendor/bootstrap-table/extensions/export/export.js"></script>
-
+<!-- <script src="image-picker.js"></script> -->
 
 <!-- <script src="../../assets/vendor/plugins/bootstrap-toggle/bootstrap-toggle.min.js"></script> -->
-
-
 <!-- Create Me SCRIPTS -->
-<script src="../../assets/js/config/index.js"></script>
+<script src="../../assets/js/config/theme.js"></script>
 
 <script> 
 $(document).ready(function() {

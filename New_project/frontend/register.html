@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="assets/vendor/plugins/bootstrap-toggle/bootstrap-toggle.min.css">
     <link rel="stylesheet" href="assets/vendor/plugins/toastr/toastr.min.css">
     <link rel="stylesheet" href="assets/vendor/plugins/@sweetalert2/theme-bootstrap-4/bootstrap-4.css">
+    
 
     <!-- Start Style -->
     <style>
@@ -78,45 +79,36 @@
     <script src="assets/vendor/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
     <!--===============================================================================================-->
+
+    <script src="assets/vendor/plugins/toastr/toastr.min.js"></script>
     <!-- <script src="assets/js/login.js"></script> -->
 
     <script type="text/javascript">
 
     $(document).ready(function(){
-        $('#regis_form').on('submit', function (e) {
+        $('#formData').on('submit', function (e) {
             e.preventDefault();
-            // console.log($('#firstname').val());
             $.post("assets/lib/datareturn.php", {
                 i: 105,
                 email: $('#email').val(),
                 password: $('#password').val(),
                 firstname: $('#firstname').val(),
                 lastname: $('#lastname').val(),
-                // success: function (res) {
-                //     console.log(res);
-                // }
-            }).done(function(resp) {
-                console.log(resp.data);
-                if(resp.data === "Failed"){
-                    Swal.fire({
-                    text: 'ชื่อผู้ใช้งานนี้มีคนใช้เเล้ว',
-                    icon: 'error',
-                    confirmButtonText: 'ตกลง',
-                })
-                .then((result) => {
-                    location.reload();
-                });
-                }else {
-                    Swal.fire({
-                    text: 'เสร็จสิ้น',
-                    icon: 'success',
-                    confirmButtonText: 'ตกลง',
-                })
-                .then((result) => {
-                    location.assign('login.html');
-                });
+            })
+            .done(function(resp) {
+                // console.log(resp);
+                if(resp.data === "Success"){
+                  toastr.success('สมัครสมาชิกเรียบร้อย')
+                  setTimeout(() => {
+                    window.location.href = 'login.html'
+                  }, 800);
                 }
-
+                else {
+                    toastr.error('ชื่อผู้ใช้งานนี้มีคนใช้เเล้ว')
+                  // setTimeout(() => {
+                  //   window.location.reload();
+                  // }, 800);
+                }
         });
     });
 });

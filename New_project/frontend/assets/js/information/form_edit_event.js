@@ -295,12 +295,24 @@ function ReadFileVideo() {
         Videodropzone.processQueue();
     }     
     else {
-        sendEvent().done(function(resp) {
-            if(resp == 1){
+        let title = $("#title").val();
+        let event_type = $("#event_type").val();
+        let details = $("#details").val();
+        $.post("../../assets/lib/datareturn.php", {
+            i: 112,
+            id: id,
+            title: title,
+            event_type:event_type,
+            details:details,
+        }).done(function(resp) {
+            if(resp.data == "Success"){
               toastr.success('เข้าสู่ระบบเรียบร้อย')
               setTimeout(() => {
-                window.location.href = 'pages/dashboard'
+                window.location.href = 'index.html'
               }, 800);
+            }
+            else {
+                toastr.error('ไม่สามารถบันทึกข้อมูลได้');
             }
         });
     }

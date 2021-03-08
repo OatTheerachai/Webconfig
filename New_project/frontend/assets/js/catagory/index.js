@@ -67,14 +67,6 @@
             }
         ],
         "order": [[1, 'asc']],
-        // fixedHeader: true,
-		// orderCellsTop: true,
-		// columnDefs: [
-		// 	{
-		// 		searchable: false,
-		// 		targets: [0, 4]
-		// 	}
-		// ],
         "initComplete": function () {
                 // createDropdowns(this.api());
                 this.api().columns([1, 3]).every( function () {

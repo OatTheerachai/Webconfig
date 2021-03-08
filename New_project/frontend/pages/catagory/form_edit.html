@@ -20,6 +20,12 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 
+    <script> 
+        $(document).ready(function() {
+            $("#sidebar").load("../include/sidebar.html"); 
+        });
+        </script> 
+
 </head>
 <body class="hold-transition sidebar-mini">
 
@@ -137,39 +143,9 @@
 
 <script src="../../assets/js/catagory/form_create.js"></script>
 <script>
-    $("#sidebar").load("../include/sidebar.html"); 
 
     $(document).ready(function(){
-        // $('#formData').on('submit', function (e) {
-        //     // e.preventDefault();
-        //     // console.log($('#formData').serialize());
-        //     $.post("../../assets/lib/datareturn.php", {
-        //         i: 101,
-        //         building: $('#building').val(),
-        //         floor: $('#floor').val(),
-        //         owner: $('#owner').val(),
-        //         name: $('#name').val(),
-        //         }).done(function(resp) {
-        //             if(resp == "Success"){
-        //                 Swal.fire({
-        //                 text: 'เพิ่มข้อมูลเรียบร้อย',
-        //                 icon: 'success',
-        //                 confirmButtonText: 'ตกลง',
-        //             }).then((result) => {
-        //                 location.assign('index.html');
-        //             });
-        //             }
-        //             else {
-        //                 swal({
-        //                     title: 'ERROR',
-        //                     text: 'ไม่สามารถเพิ่มข้อมูลได้',
-        //                     confirmButtonText: "OK",
-        //                     type: 'error'
-        //                 });
-        //             }
-
-        //     })
-        // });
+        $("#sidebar").load("../include/sidebar.html"); 
     });
 </script>
 </body>

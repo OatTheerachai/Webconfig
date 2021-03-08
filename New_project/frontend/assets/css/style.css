@@ -149,4 +149,17 @@ input.input {
     object-fit: cover;
   }
 
+  tfoot {
+      display: none;
+  }
+
+  ul.thumbnails.image_picker_selector li .thumbnail.selected {
+      background: green !important;
+  }
+
+  .thumbnails li img{
+    width: 200px;
+    height: 200px;
+}
+
 
