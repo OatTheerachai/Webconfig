@@ -1,12 +1,13 @@
 <?php
     header('Content-Type: application/json');
     include("queryFactory.php");
-
+    // session_start();
 
     if(isset($_GET["i"])){
         switch($_GET["i"]){
             case 1:
-                echo selectDataSQL("SELECT * FROM users WHERE id=1");
+                $email = $_SESSION['email'];
+                echo selectDataSQL("SELECT * FROM users WHERE email='$email'");
             break;
             case 2:
                 echo selectDataSQL("SELECT * FROM event_type");
@@ -19,15 +20,7 @@
                 echo selectDataSQL("SELECT * FROM form_config");
             break;
             case 5:
-                $response = [
-                    'status' => true,
-                    'data' => [
-                        'labels' => ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'], 
-                        'data' => [125, 147,136, 142, 118, 180, 140, 176, 190, 220, 190, 220]
-                    ],
-                    'message' => 'OK'
-                ];
-                echo json_encode($response);
+                echo selectDataSQL("SELECT * FROM event");
             break;
             case 6:
                 echo '{"data":'.selectDataSQL("SELECT *,IF(status, 'true', 'false') status FROM ip_address")."}";
@@ -98,22 +91,24 @@
                 echo json_encode($newdata);
             break;
             case 14:
-                $date = $_GET['date'];
+                $start_date = $_GET['start_date'];
+                $end_date = $_GET['end_date'];
                 echo '{"data":'.selectDataSQL("SELECT event.*,event_type.name,COUNT(log_event.event_id) as Views FROM event 
                     INNER JOIN event_type ON event.et_id = event_type.id 
                     LEFT JOIN log_event ON event.id = log_event.event_id 
-                    WHERE show_status = 1 AND  DATE(time) = '$date'
+                    WHERE show_status = 1 AND  DATE(time) BETWEEN '$start_date' AND '$end_date'
                     group by event.id")."}";
             break;
             case 15:
-                $date = $_GET['date'];
+                $start_date = $_GET['start_date'];
+                $end_date = $_GET['end_date'];
                 echo '{"data":'.selectDataSQL("SELECT agency_item.id,agency_item.floor,agency_item.code_place,agency_item.owner,agency_item.name,
                     agency_item.detail,building.name as bd_name,category.name as cat_name,COUNT(log_agency.agen_id) as Views
                     FROM agency_item 
                     JOIN building ON building.id = agency_item.bd_id 
                     JOIN category ON category.id = agency_item.cat_id
                     LEFT JOIN log_agency ON agency_item.id = log_agency.agen_id
-                    WHERE show_status = 1 AND  DATE(time) = '$date'
+                    WHERE show_status = 1 AND  DATE(time) BETWEEN '$start_date' AND '$end_date'
                     group by agency_item.id")."}";
             break;
         }
@@ -160,16 +155,17 @@
                 $event_type = $_POST['event_type'];
                 $details = $_POST['details'];
                 $id = queryDataLastID("INSERT INTO event (title,detail,et_id,show_status) VALUE ('$title','$details','$event_type',1)");
-                echo $id;
+                // echo $id;
                 $last_id = json_decode($id,true);
                 $data_pic = json_decode(upload_pic(),true);
                 foreach($data_pic as $key=>$value) {
                     $e_id = $last_id['id'];
                     $nmae = $value['name'];
                     $gen_name = $value['gen_name'];
-                    queryData("INSERT INTO picture (p_name,gen_p_name,e_id) VALUE ('$nmae','$gen_name',$e_id)");
+                    echo queryData("INSERT INTO picture (p_name,gen_p_name,e_id) VALUE ('$nmae','$gen_name',$e_id)");
                 }
             break;
+            // not working
             case 107:
                 $id = $_POST['id'];
                 $data_video = json_decode(upload_video(),true);
@@ -220,13 +216,18 @@
             case 113:
                 $p_id = $_POST['p_id'];
                 $p_path = $_POST['p_path'];
-                unlink($p_path);
+                $id = $_POST['id'];
+                // $title = $_POST['title'];
+                // $event_type = $_POST['event_type'];
+                // $detail = $_POST['details'];
                 $data_pic = json_decode(upload_pic(),true);
+                // echo $data_pic;
                 foreach($data_pic as $key=>$value) {
                     $nmae = $value['name'];
                     $gen_name = $value['gen_name'];
                     echo queryData("UPDATE picture SET p_name ='$nmae', gen_p_name = '$gen_name' WHERE p_id='$p_id'");
                 }
+                unlink($p_path);
                 break;
             case 114:
                 $v_id = $_POST['v_id'];
@@ -244,6 +245,15 @@
                 $status = $_POST['status'];
                 echo queryData("UPDATE ip_address SET status = $status  WHERE ip_id='$id'");
                 break;
+            case 116:
+                // echo selectDataSQL("SELECT * FROM event JOIN picture ON event.id = picture.e_id");
+                $data = json_decode(selectDataSQL("SELECT * FROM event JOIN picture ON event.id = picture.e_id"),true);
+                // echo $data[0]['gen_p_name'];
+                foreach($data as $key=>$value){
+                    $data[$key]['path'] = 'picture/'.$value['gen_p_name'];
+                }
+                echo json_encode($data);
+            break;
         }
     }
 

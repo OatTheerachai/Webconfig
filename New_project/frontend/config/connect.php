@@ -1,17 +1,18 @@
-<?php 
+<?php
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "project";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "project";
 
-    // Create Connection
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-    mysqli_set_charset($conn,'utf8');
+$urlheader = "http://localhost:8080/Github/Webconfig/New_project/frontend/";
+// $urlheader = "http://localhost/frontend/";
 
-    // Check connection
-    if (!$conn) {
-        die("Connection failed" . mysqli_connect_error());
-    } 
+// Create Connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+mysqli_set_charset($conn, 'utf8');
 
-?>
+// Check connection
+if (!$conn) {
+    die("Connection failed" . mysqli_connect_error());
+}

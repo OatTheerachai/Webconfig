@@ -51,7 +51,7 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row) {
           return `<div class="btn-group" role="group">
-                      <a href="form_edit_theme.html?id=${data.ip_id}" type="button" class="btn btn-warning">
+                      <a href="form_edit_theme.phpl?id=${data.ip_id}" type="button" class="btn btn-warning">
                           <i class="far fa-edit"></i> แก้ไข
                       </a>
                       <button type="button" class="btn btn-info" id="delete" data-id="${data.ip_id}">

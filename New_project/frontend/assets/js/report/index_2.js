@@ -1,5 +1,14 @@
 $( document ).ready(function() {
 
+  $('#start_date').datepicker({
+    format: 'yyyy-mm-dd',
+    uiLibrary: 'bootstrap4',
+});
+$('#end_date').datepicker({
+    format: 'yyyy-mm-dd',
+    uiLibrary: 'bootstrap4',
+});
+
 function createDropdowns(api,colNumber,SelectPosition,setText,Tableposition) {
   api.columns([colNumber]).every( function () {
     let column = this;
@@ -23,7 +32,8 @@ var DropdownBuilding = $('#search_bd');
 var DropdownCategory = $('#search_cat');
 var information = $("#dataTable-event").DataTable({
   processing: true,
-  responsive: true,
+  // responsive: true,
+  scrollX: true,
   dom: "Bfrtip",
   buttons: [
     {
@@ -98,19 +108,19 @@ var information = $("#dataTable-event").DataTable({
     createDropdowns(this.api(),1,DropdownBuilding,"กรุณาเลือกอาคาร");
     createDropdowns(this.api(),3,DropdownCategory,"กรุณาเลือกประเภท");
   },
-  responsive: {
-    details: {
-      display: $.fn.dataTable.Responsive.display.modal({
-        header: function (row) {
-          var data = row.data();
-          return data.title;
-        },
-      }),
-      renderer: $.fn.dataTable.Responsive.renderer.tableAll({
-        tableClass: "table",
-      }),
-    },
-  },
+  // responsive: {
+  //   details: {
+  //     display: $.fn.dataTable.Responsive.display.modal({
+  //       header: function (row) {
+  //         var data = row.data();
+  //         return data.name;
+  //       },
+  //     }),
+  //     renderer: $.fn.dataTable.Responsive.renderer.tableAll({
+  //       tableClass: "table",
+  //     }),
+  //   },
+  // },
   language: {
     lengthMenu: "แสดงข้อมูล _MENU_ แถว",
     zeroRecords: "ไม่พบข้อมูลที่ต้องการ",
@@ -123,8 +133,10 @@ var information = $("#dataTable-event").DataTable({
 information.buttons().container().appendTo($("#excel"));
 
 function getDate_LogView() {
-  $("#date").on("change", function(e) {
-      date = $("#date").val();
+  $("#start_date,#end_date").on("change", function(e) {
+    let start_date = $('#start_date').val();
+    let end_date = $('#end_date').val();
+      // date = $("#date").val();
       // console.log(date);
       if ( $.fn.dataTable.isDataTable( '#dataTable-event' ) ) {
           information.destroy();
@@ -134,7 +146,8 @@ function getDate_LogView() {
       }
       information = $("#dataTable-event").DataTable({
         processing: true,
-        responsive: true,
+        // responsive: true,
+        scrollX: true,
         dom: "Bfrtip",
         buttons: [
           {
@@ -147,7 +160,8 @@ function getDate_LogView() {
           url: "../../assets/lib/datareturn.php",
           data: {
             i: 15,
-            date: date
+            start_date: start_date,
+            end_date: end_date,
           },
           type: "GET",
         },
@@ -210,19 +224,19 @@ function getDate_LogView() {
           createDropdowns(this.api(),1,DropdownBuilding,"กรุณาเลือกอาคาร");
           createDropdowns(this.api(),3,DropdownCategory,"กรุณาเลือกประเภท");
         },
-        responsive: {
-          details: {
-            display: $.fn.dataTable.Responsive.display.modal({
-              header: function (row) {
-                var data = row.data();
-                return data.title;
-              },
-            }),
-            renderer: $.fn.dataTable.Responsive.renderer.tableAll({
-              tableClass: "table",
-            }),
-          },
-        },
+        // responsive: {
+        //   details: {
+        //     display: $.fn.dataTable.Responsive.display.modal({
+        //       header: function (row) {
+        //         var data = row.data();
+        //         return data.title;
+        //       },
+        //     }),
+        //     renderer: $.fn.dataTable.Responsive.renderer.tableAll({
+        //       tableClass: "table",
+        //     }),
+        //   },
+        // },
         language: {
           lengthMenu: "แสดงข้อมูล _MENU_ แถว",
           zeroRecords: "ไม่พบข้อมูลที่ต้องการ",

@@ -2,32 +2,52 @@ $(document).ready(function(){
 
      var event = $('#dataTable-event').DataTable( {
         processing: true,
-        responsive: true,
+        // responsive: true,
+        // scrollCollapse: true,
+        // autoWidth: false,
+        // scrollY:        "300px",
+        scrollX: true,
         ajax: 
         {
             url: '../../assets/lib/datareturn.php?i=3',
             type: 'GET',
         },
+        // columnDefs: [ {
+            // targets: 3,
+            // render: function ( data, type, row ) {
+            //     return data.substr( 0, 50 );
+            // }
+        // } ],
+        // fixedColumns:   true,
+        // fixedColumns: {
+        //     leftColumns: 1,
+        //     // rightColumns: 1
+        // },
         columns: [
             { 
                 title: 'ลำดับ',
                 className: "align-middle",
-                data: null
+                data: null,
             },
             { 
                 title: "หัวข้อ",
                 className: "align-middle",
-                data: 'title'
+                data: 'title',
             },
             { 
                 title: "ประเภท",
                 className: "align-middle",
-                data: 'name'
+                data: 'name',
             },
             { 
                 title: "รายละเอียด",
                 className: "align-middle",
-                data: 'detail'
+                data: 'detail',
+                // render: function ( data, type, row ) {
+                //     return type === 'display' && data.detail.length > 60 ? 
+                //     data.detail.substr( 0, 10 ) +'.....' 
+                //     : data.detail;
+                // }
             },
             {
                 title: "จัดการ",
@@ -35,7 +55,7 @@ $(document).ready(function(){
                 data: null,
                 render: function ( data, type, row ) {
                     return `<div class="btn-group" role="group">
-                                <a href="form_edit_event.html?id=${data.id}" type="button" class="btn btn-warning">
+                                <a href="form_edit_event.php?id=${data.id}" type="button" class="btn btn-warning">
                                     <i class="far fa-edit"></i> แก้ไข
                                 </a>
                                 <button type="button" class="btn btn-danger" id="delete" data-id="${data.id}">
@@ -50,6 +70,7 @@ $(document).ready(function(){
                "orderable": false,
                "targets": 0
            }],
+        // ordering: false,
         "order": [[1, 'asc']],
         "initComplete": function () {
                 $(document).on('click', '#delete', function(){ 
@@ -81,19 +102,19 @@ $(document).ready(function(){
                     })
                 })
             },
-        responsive: {
-            details: {
-                display: $.fn.dataTable.Responsive.display.modal( {
-                    header: function ( row ) {
-                        var data = row.data();
-                        return data.title;
-                    }
-                } ),
-                renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
-                    tableClass: 'table'
-                } )
-            }
-        },
+        // responsive: {
+        //     details: {
+        //         display: $.fn.dataTable.Responsive.display.modal( {
+        //             header: function ( row ) {
+        //                 var data = row.data();
+        //                 return data.title;
+        //             }
+        //         } ),
+        //         renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+        //             tableClass: 'table'
+        //         } )
+        //     }
+        // },
         "language": {
                 "lengthMenu": "แสดงข้อมูล _MENU_ แถว",
                 "zeroRecords": "ไม่พบข้อมูลที่ต้องการ",
@@ -131,6 +152,7 @@ $(document).ready(function(){
             }
         });
      }
+
 
      setDefult();
 

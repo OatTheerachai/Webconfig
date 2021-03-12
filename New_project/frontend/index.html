@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<link rel="stylesheet" href="assets/css/index.css">
+</head>
+<body>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <!-- <div class="swiper-slide" style="background-image: url(assets/img/bg-01.jpg);">
+            <div class="conteent">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Exercitationem incidunt rerum neque velit ipsum ab impedit maxime nisi enim cum suscipit, 
+                    dignissimos atque consectetur autem possimus libero? Quis, mollitia cumque?</p>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/plugins/jquery/jquery.min.js"></script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+      spaceBetween: 30,
+      centeredSlides: true,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+    });
+
+    $.ajax({
+    url: "assets/lib/datareturn.php", 
+    type: 'post',
+    data: {
+        i:116
+    },
+    success: function(result){
+        result.forEach(element => {
+            $('.swiper-wrapper').append(`<div class="swiper-slide" style="background-image: url(${element.path});">
+                <div class="conteent">
+                    <p>${element.detail}</p>
+                </div>
+            </div>`);
+        });
+    }});
+    // console.log("test");
+  </script>
+</body>
+</html> 

@@ -1,24 +1,45 @@
-
+const charLimit = 100;
 var text = $('#details').summernote({
     toolbar: [
-        ['style', ['style']],
+        // ['style', ['style']],
         ['font', ['bold', 'underline', 'clear']],
         ['color', ['color']],
         ['para', ['ul', 'ol', 'paragraph']],
     ],
     callbacks: {
         onKeydown: function(e) {
-            var t = e.currentTarget.innerText;
-            const maxlength = 100;
-            $("#total-characters").text(t.length + "/" + maxlength);
-            if (t.length >= maxlength) {
-              //delete key
-              if (e.keyCode != 8 ){
+          var t = e.currentTarget.innerText;
+          if (t.length >= max) {
+            //delete key
+            if (e.keyCode != 8 && !(e.keyCode >= 37 && e.keyCode <= 40) && e.keyCode != 46 && !(e.keyCode == 88 && e.ctrlKey) && !(e.keyCode == 67 && e.ctrlKey)) 
+            {
                 e.preventDefault();
-              }
             }
           }
-    },
+        },
+        onKeyup: function(e) {
+          var t = e.currentTarget.innerText;
+          if (typeof callbackMax == 'function') {
+            callbackMax(max - t.length);
+          }
+        },
+        onPaste: function(e) {
+          var t = e.currentTarget.innerText;
+          var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+          e.preventDefault();
+          var maxPaste = bufferText.length;
+          let all = t.length + bufferText.length;
+          if(all > max) {
+            maxPaste = max - t.length;
+          }
+          if(maxPaste > 0){
+            document.execCommand('insertText', false, bufferText.trim().substring(0, maxPaste));
+          }
+          if (typeof callbackMax == 'function') {
+                callbackMax(max - t.length);
+          }
+        }   
+      },
     height: 100,
 });
 
@@ -125,10 +146,8 @@ var Picdropzone = new Dropzone('#mydropzone', {
         //set default picture by id
         ReadFilePic();
 
-
         this.on("addedfile", function(file) { 
             upload_pic = true;
-            console.log(upload_pic);
             if (prevFile !== "undefined") {
                 this.removeFile(prevFile);
                 prevFile = file;
@@ -149,7 +168,7 @@ var Picdropzone = new Dropzone('#mydropzone', {
         }),
 
         this.on("error", function(file, message) { 
-            alert(message);
+            // alert(message);
             this.removeFile(file); 
         });
     },
@@ -158,16 +177,21 @@ var Picdropzone = new Dropzone('#mydropzone', {
         return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
     },
     success: function(file, response) {
+        console.log(response.data);
         if(response.data == "Success"){
-            if(upload_Video == true){
-                Videodropzone.processQueue();
-            }
-            else {
-                toastr.success('บันทึกข้อมูลเรียบร้อย')
-                setTimeout(() => {
-                  window.location.href = '../information'
-                }, 800);
-            }
+            toastr.success('บันทึกข้อมูลเรียบร้อย')
+            setTimeout(() => {
+              window.location.href = '../information'
+            }, 800);
+            // if(upload_Video == true){
+            //     Videodropzone.processQueue();
+            // }
+            // else {
+            //     toastr.success('บันทึกข้อมูลเรียบร้อย')
+            //     setTimeout(() => {
+            //       window.location.href = '../information'
+            //     }, 800);
+            // }
         }
         else {
             toastr.error('ไม่สามารถบันทึกข้อมูลได้');
@@ -177,99 +201,99 @@ var Picdropzone = new Dropzone('#mydropzone', {
         // }
     }
 });
-var v_id;
-var v_path;
-var prevFileVideo;
-var upload_Video = false;
-function ReadFileVideo() {
-    $.ajax({
-        url: '../../assets/lib/datareturn.php',
-        type: 'post',
-        data: {
-            i: 111,
-            e_id: id
-        },
-        dataType: 'json',
-        success: function(response){
-          $.each(response, function(key,value) {
-            var mockFile = { 
-                id: value.id,
-                name: value.v_name, 
-                size: value.size 
-            };
-            v_id = value.v_id;
-            v_path = value.v_path;
-            Videodropzone.options.addedfile.call(Videodropzone, mockFile);
-            Videodropzone.options.thumbnail.call(Videodropzone, mockFile, '../../assets/img/video.png');
-            Videodropzone.files.push( mockFile );
-            Videodropzone.options.complete.call(Videodropzone, mockFile);
-            prevFileVideo = mockFile;
-          });
-        }
-    });
-}
+// var v_id;
+// var v_path;
+// var prevFileVideo;
+// var upload_Video = false;
+// function ReadFileVideo() {
+//     $.ajax({
+//         url: '../../assets/lib/datareturn.php',
+//         type: 'post',
+//         data: {
+//             i: 111,
+//             e_id: id
+//         },
+//         dataType: 'json',
+//         success: function(response){
+//           $.each(response, function(key,value) {
+//             var mockFile = { 
+//                 id: value.id,
+//                 name: value.v_name, 
+//                 size: value.size 
+//             };
+//             v_id = value.v_id;
+//             v_path = value.v_path;
+//             Videodropzone.options.addedfile.call(Videodropzone, mockFile);
+//             Videodropzone.options.thumbnail.call(Videodropzone, mockFile, '../../assets/img/video.png');
+//             Videodropzone.files.push( mockFile );
+//             Videodropzone.options.complete.call(Videodropzone, mockFile);
+//             prevFileVideo = mockFile;
+//           });
+//         }
+//     });
+// }
 
-  //dropzone video
-  var checkVideo = 0;
-  var Video_name = new Array;
-  var Videodropzone = new Dropzone('#mydropzone_video', {
-      url: '../../assets/lib/datareturn.php',
-      params: {
-          i:114
-      },
-      paramName: "video",
-      autoProcessQueue: false,
-      maxFiles: 1,
-      parallelUploads: 10,
-      uploadMultiple: true,
-    //   addRemoveLinks: true,
-      maxFilesize: 10, // MB
-      dictRemoveFile: "ลบออก",
-      dictDefaultMessage: "เลือกวิดิโอ",
-      dictFileTooBig: "ไม่อนุญาตให้อัพโหลดไฟล์เกิน 2 MB",
-      dictMaxFilesExceeded:"สามารถอัพโหลดได้ 1 วิดิโอ",
-      dictInvalidFileType: "สามารถอัพโหลดได้เฉพาะ mp4",
-      acceptedFiles: "video/mp4",
-      init: function() {
+//   //dropzone video
+//   var checkVideo = 0;
+//   var Video_name = new Array;
+//   var Videodropzone = new Dropzone('#mydropzone_video', {
+//       url: '../../assets/lib/datareturn.php',
+//       params: {
+//           i:114
+//       },
+//       paramName: "video",
+//       autoProcessQueue: false,
+//       maxFiles: 1,
+//       parallelUploads: 10,
+//       uploadMultiple: true,
+//     //   addRemoveLinks: true,
+//       maxFilesize: 10, // MB
+//       dictRemoveFile: "ลบออก",
+//       dictDefaultMessage: "เลือกวิดิโอ",
+//       dictFileTooBig: "ไม่อนุญาตให้อัพโหลดไฟล์เกิน 2 MB",
+//       dictMaxFilesExceeded:"สามารถอัพโหลดได้ 1 วิดิโอ",
+//       dictInvalidFileType: "สามารถอัพโหลดได้เฉพาะ mp4",
+//       acceptedFiles: "video/mp4",
+//       init: function() {
 
-        //set default video by id
-        ReadFileVideo();
-        this.on("sending", function(file, xhr, formData){
-            formData.append("id", id);
-            formData.append("v_id", v_id);
-            formData.append("v_path", v_path);
-        }),
+//         //set default video by id
+//         ReadFileVideo();
+//         this.on("sending", function(file, xhr, formData){
+//             formData.append("id", id);
+//             formData.append("v_id", v_id);
+//             formData.append("v_path", v_path);
+//         }),
 
-        this.on("addedfile", function(file) { 
-            upload_Video = true;
-            file.previewElement.querySelector("img").src = '../../assets/img/video.png';
-            if (prevFileVideo !== "undefined") {
-                this.removeFile(prevFileVideo);
-                prevFileVideo = file;
-            }
-        });
-        this.on("error", function(file, message) { 
-            alert(message);
-            this.removeFile(file); 
-        });
+//         this.on("addedfile", function(file) { 
+//             upload_Video = true;
+//             file.previewElement.querySelector("img").src = '../../assets/img/video.png';
+//             if (prevFileVideo !== "undefined") {
+//                 this.removeFile(prevFileVideo);
+//                 prevFileVideo = file;
+//             }
+//         });
+//         this.on("error", function(file, message) { 
+//             alert(message);
+//             this.removeFile(file); 
+//         });
 
-      },
-      success: function(file,res) {
-        if(res.data == "Success"){
-            toastr.success('บันทึกข้อมูลเรียบร้อย')
-            setTimeout(() => {
-              window.location.href = '../information'
-            }, 800);
-        }
-        else {
-            toastr.error('ไม่สามารถบันทึกข้อมูลได้');
-        }
-      },
-      removedfile: function(file) {
-          let _ref;
-          return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
-      }
-  });
+//       },
+//       success: function(file,res) {
+//         if(res.data == "Success"){
+//             toastr.success('บันทึกข้อมูลเรียบร้อย')
+//             setTimeout(() => {
+//               window.location.href = '../information'
+//             }, 800);
+//         }
+//         else {
+//             toastr.error('ไม่สามารถบันทึกข้อมูลได้');
+//         }
+//       },
+//       removedfile: function(file) {
+//           let _ref;
+//           return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+//       }
+//   });
 
   async function sendEvent() {
     let title = $("#title").val();
@@ -289,11 +313,7 @@ function ReadFileVideo() {
     if(upload_pic == true) {
         sendEvent();
         Picdropzone.processQueue();
-    }
-    else if(upload_Video == true) {
-        sendEvent();
-        Videodropzone.processQueue();
-    }     
+    }    
     else {
         let title = $("#title").val();
         let event_type = $("#event_type").val();
@@ -308,7 +328,7 @@ function ReadFileVideo() {
             if(resp.data == "Success"){
               toastr.success('เข้าสู่ระบบเรียบร้อย')
               setTimeout(() => {
-                window.location.href = 'index.html'
+                window.location.href = '../information'
               }, 800);
             }
             else {
